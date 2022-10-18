@@ -46,24 +46,28 @@ window = Tk()
 window.title("Flashcard")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
-flipTimer = window.after(3000, func=flipCard)
+flipTimer = window.after(6000, func=flipCard)
 
-canvas = Canvas(height=526, width=800)
+canvas = Canvas(height=526, width=900)
 flashcardFrontIMG = PhotoImage(file="card_front.gif")
 flashcardBackImage = PhotoImage(file="card_back.gif")
 cardBackground = canvas.create_image(400, 263, image=flashcardFrontIMG)
 cardTitle = canvas.create_text(400, 263, text="", font=FONT1)
 cardWord = canvas.create_text(400, 150, text="", font=FONT2)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
-canvas.grid(column=0, row=0, columnspan=2)
+canvas.grid(column=0, row=0, columnspan=3)
 
 checkIMG = PhotoImage(file="right.gif")
 correctButton = Button(image=checkIMG, highlightthickness=0, command=isKnown)
 correctButton.grid(column=0, row=1)
 
+audioImage = PhotoImage(file="audio2.png")
+audioBtn = Button(image=audioImage,highlightthickness=0)
+audioBtn.grid(column=1,row=1)
+
 wrongIMG = PhotoImage(file="wrong.gif")
 wrongButton = Button(image=wrongIMG, highlightthickness=0, command=nextCard)
-wrongButton.grid(column=1, row=1)
+wrongButton.grid(column=2, row=1)
 
 nextCard()
 
