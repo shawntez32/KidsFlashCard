@@ -1,6 +1,9 @@
+from email.mime import image
+from email.policy import default
 from tkinter import *
 import pandas
 import random
+from PIL import Image,ImageTk
 
 
 BACKGROUND_COLOR = "#B1DDC6"
@@ -27,19 +30,19 @@ def nextCard():
     canvas.itemconfig(cardTitle, text="Word", fill="black")
     canvas.itemconfig(cardWord, text=currentCard["Word"], fill="black")
     canvas.itemconfig(cardBackground, image=flashcardFrontIMG)
-    flipTimer = window.after(3000, func=flipCard)
+    flipTimer = window.after(6000, func=flipCard)
 
 
 def flipCard():
+    index = currentCard["FilePath"]
     canvas.itemconfig(cardTitle, text="Definition", fill="white")
     canvas.itemconfig(cardWord, text=currentCard["Definition"], fill="white")
-    canvas.itemconfig(cardBackground, image=flashcardBackImage)
-
-
+    wordImage = photoList[index]
+    canvas.itemconfig(cardBackground, image=wordImage)
+         
 def isKnown():
     wordsLeft.remove(currentCard)
     nextCard()
-
 
 # UI
 window = Tk()
@@ -48,10 +51,16 @@ window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
 flipTimer = window.after(6000, func=flipCard)
 
+cat = ImageTk.PhotoImage(file="cat.jfif")
+dog = ImageTk.PhotoImage(file="data/images/dog.jfif")
+cow = ImageTk.PhotoImage(file="data/images/cow.jfif")
+
+photoList = [cat,dog,cow]
+
 canvas = Canvas(height=526, width=900)
-flashcardFrontIMG = PhotoImage(file="card_front.gif")
-flashcardBackImage = PhotoImage(file="card_back.gif")
-cardBackground = canvas.create_image(400, 263, image=flashcardFrontIMG)
+flashcardFrontIMG = ImageTk.PhotoImage(file="card_front.gif")
+flashcardBackImage = ImageTk.PhotoImage(file="card_back.gif")
+cardBackground = canvas.create_image(500, 293, image=flashcardFrontIMG)
 cardTitle = canvas.create_text(400, 263, text="", font=FONT1)
 cardWord = canvas.create_text(400, 150, text="", font=FONT2)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
