@@ -38,8 +38,6 @@ def flipCard():
 
 def isKnown():
     wordsLeft.remove(currentCard)
-    wordsLeftData = pandas.DataFrame(wordsLeft)
-    wordsLeftData.to_csv("data/kids_vocab.csv", index=False)
     nextCard()
 
 
