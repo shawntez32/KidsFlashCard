@@ -4,6 +4,8 @@ from tkinter import *
 import pandas
 import random
 from PIL import Image,ImageTk
+from gtts import gTTS
+import os
 
 
 BACKGROUND_COLOR = "#B1DDC6"
@@ -22,21 +24,25 @@ except FileNotFoundError:
 else:
     wordsLeft = data.to_dict(orient="records")
 
+def sayWord(word):
+    language = "en"
+    sound = gTTS(text=word, lang=language, slow=False)
+
 
 def nextCard():
     global currentCard, flipTimer
     window.after_cancel(flipTimer)
     currentCard = random.choice(wordsLeft)
-    canvas.itemconfig(cardTitle, text="Word", fill="black")
-    canvas.itemconfig(cardWord, text=currentCard["Word"], fill="black")
+    canvas.itemconfig(cardWord, text="Word", fill="black")
+    canvas.itemconfig(cardTitle, text=currentCard["Word"], fill="black")
     canvas.itemconfig(cardBackground, image=flashcardFrontIMG)
     flipTimer = window.after(6000, func=flipCard)
 
 
 def flipCard():
     index = currentCard["FilePath"]
-    canvas.itemconfig(cardTitle, text="Definition", fill="white")
-    canvas.itemconfig(cardWord, text=currentCard["Definition"], fill="white")
+    canvas.itemconfig(cardWord, text="Definition", fill="white")
+    canvas.itemconfig(cardTitle, text=currentCard["Definition"], fill="white")
     wordImage = photoList[index]
     canvas.itemconfig(cardBackground, image=wordImage)
          
@@ -54,8 +60,10 @@ flipTimer = window.after(6000, func=flipCard)
 cat = ImageTk.PhotoImage(file="cat.jfif")
 dog = ImageTk.PhotoImage(file="data/images/dog.jfif")
 cow = ImageTk.PhotoImage(file="data/images/cow.jfif")
+car = ImageTk.PhotoImage(file="data/images/car.jfif")
+run = ImageTk.PhotoImage(file="data/images/run.jfif")
 
-photoList = [cat,dog,cow]
+photoList = [cat,dog,cow,car,run]
 
 canvas = Canvas(height=526, width=900)
 flashcardFrontIMG = ImageTk.PhotoImage(file="card_front.gif")
