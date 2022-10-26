@@ -43,14 +43,14 @@ def nextCard():
     canvas.itemconfig(cardTitle, text=currentCard["Word"], fill="black")
     canvas.itemconfig(cardBackground, image=flashcardFrontIMG)
     sayWord(currentCard["Word"])
-    flipTimer = window.after(4000, func=flipCard)
+    flipTimer = window.after(3000, func=flipCard)
 
 
 def flipCard():
     index = currentCard["FilePath"]
     canvas.itemconfig(cardWord, text="Definition", fill="white")
     canvas.itemconfig(cardTitle, text=currentCard["Definition"], fill="white")
-    wordImage = photoList[index]
+    wordImage = photoList2[index]
     canvas.itemconfig(cardBackground, image=wordImage)
          
 def isKnown():
@@ -64,15 +64,20 @@ window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
 
 flipTimer = window.after(6000, func=flipCard)
 
-cat = ImageTk.PhotoImage(file="cat.jfif")
-dog = ImageTk.PhotoImage(file="data/images/dog.jfif")
-cow = ImageTk.PhotoImage(file="data/images/cow.jfif")
-car = ImageTk.PhotoImage(file="data/images/car.jfif")
-run = ImageTk.PhotoImage(file="data/images/run.jfif")
-school = ImageTk.PhotoImage(file="data/images/school.jfif")
-bus = ImageTk.PhotoImage(file="data/images/bus.jfif")
+dog = Image.open("data/images/dog.jfif").resize((800,526), Image.ANTIALIAS)
+cat = Image.open("cat.jfif").resize((800,526), Image.ANTIALIAS)
+cow = Image.open("data/images/cow.jfif").resize((800,526), Image.ANTIALIAS)
+car = Image.open("data/images/car.jfif").resize((800,526), Image.ANTIALIAS)
+run = Image.open("data/images/run.jfif").resize((800,526), Image.ANTIALIAS)
+school = Image.open("data/images/school.jfif").resize((800,526), Image.ANTIALIAS)
+bus = Image.open("data/images/bus.jfif").resize((800,526), Image.ANTIALIAS)
 
 photoList = [cat,dog,cow,car,run,bus,school]
+photoList2 = []
+for e in photoList:
+    e = ImageTk.PhotoImage(e)
+    photoList2.append(e)
+    
 
 canvas = Canvas(height=526, width=900)
 flashcardFrontIMG = ImageTk.PhotoImage(file="card_front.gif")
