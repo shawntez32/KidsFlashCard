@@ -2,5 +2,7 @@ Word,Definition,FilePath
 Dog,Domestic animal that barks,1
 Cat,Domestic animal that meows,0
 Cow,Farm animal that produces milk,2
-Car,Fast moving vehicle that drives on 4 wheels,3
+Car,Fast moving vehicle that drives on four wheels,3
 Run,Moving legs in a fast explosive motion,4
+Bus,Large vehicle for lots of passengers,5
+School,Building where kids learn,6
