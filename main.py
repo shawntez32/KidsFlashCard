@@ -5,12 +5,14 @@ import pandas
 import random
 from PIL import Image,ImageTk
 from gtts import gTTS
-import os
+import os, playsound
+import pygame
+
 
 
 BACKGROUND_COLOR = "#B1DDC6"
-FONT1 = ("Ariel", 60, "bold")
-FONT2 = ("Ariel", 40, "italic")
+FONT1 = ("Ariel", 45, "bold")
+FONT2 = ("Ariel", 30, "italic")
 
 wordsLeft = {}
 currentCard = {}
@@ -27,6 +29,10 @@ else:
 def sayWord(word):
     language = "en"
     sound = gTTS(text=word, lang=language, slow=False)
+    sound.save(f"data/sounds/{word}.mp3")
+    pygame.mixer.init()
+    pygame.mixer.music.load(f"data/sounds/{word}.mp3")
+    pygame.mixer.music.play()
 
 
 def nextCard():
@@ -36,7 +42,8 @@ def nextCard():
     canvas.itemconfig(cardWord, text="Word", fill="black")
     canvas.itemconfig(cardTitle, text=currentCard["Word"], fill="black")
     canvas.itemconfig(cardBackground, image=flashcardFrontIMG)
-    flipTimer = window.after(6000, func=flipCard)
+    sayWord(currentCard["Word"])
+    flipTimer = window.after(4000, func=flipCard)
 
 
 def flipCard():
@@ -62,13 +69,15 @@ dog = ImageTk.PhotoImage(file="data/images/dog.jfif")
 cow = ImageTk.PhotoImage(file="data/images/cow.jfif")
 car = ImageTk.PhotoImage(file="data/images/car.jfif")
 run = ImageTk.PhotoImage(file="data/images/run.jfif")
+school = ImageTk.PhotoImage(file="data/images/school.jfif")
+bus = ImageTk.PhotoImage(file="data/images/bus.jfif")
 
-photoList = [cat,dog,cow,car,run]
+photoList = [cat,dog,cow,car,run,bus,school]
 
 canvas = Canvas(height=526, width=900)
 flashcardFrontIMG = ImageTk.PhotoImage(file="card_front.gif")
 flashcardBackImage = ImageTk.PhotoImage(file="card_back.gif")
-cardBackground = canvas.create_image(500, 293, image=flashcardFrontIMG)
+cardBackground = canvas.create_image(400, 263, image=flashcardFrontIMG)
 cardTitle = canvas.create_text(400, 263, text="", font=FONT1)
 cardWord = canvas.create_text(400, 150, text="", font=FONT2)
 canvas.config(bg=BACKGROUND_COLOR, highlightthickness=0)
